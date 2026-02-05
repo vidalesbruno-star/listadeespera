@@ -2,700 +2,556 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>El Año Que No Piensas Repetir — Lista Prioritaria</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <title>Resumen de Libros en Acciones | Mentalidad, Sistemas y Dinero</title>
   <style>
     :root {
-      --gold: #c6a664;
-      --bg: #050505;
-      --card-bg: #0d0d0d;
-      --text-main: #f5f5f5;
-      --text-soft: #b3b3b3;
-      --accent: #f5e1b0;
+      --bg: #06101f;
+      --bg-soft: #0a1c35;
+      --panel: #0d223f;
+      --line: #1f3f69;
+      --text: #f3f8ff;
+      --muted: #b7c8df;
+      --accent: #4ea4ff;
+      --accent-strong: #2d84e8;
+      --ok: #85deb0;
+      --warn: #ffd183;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow: 0 18px 48px rgba(2, 10, 24, 0.48);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* ---------- FONDO ANIMADO TIPO FRAMER ---------- */
-
-    .bg-gradient {
-      position: fixed;
-      inset: -40%;
+      margin: 0;
+      color: var(--text);
       background:
-        radial-gradient(circle at top, rgba(198,166,100,0.35), transparent 55%),
-        radial-gradient(circle at bottom, rgba(0,0,0,1), #000);
-      filter: blur(4px);
-      z-index: -3;
-      animation: bgMove 26s ease-in-out infinite alternate;
+        radial-gradient(circle at 0% 0%, rgba(78,164,255,0.22), transparent 42%),
+        radial-gradient(circle at 100% 100%, rgba(61,124,203,0.2), transparent 35%),
+        var(--bg);
+      font-family: "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.45;
+      letter-spacing: 0.01em;
     }
 
-    @keyframes bgMove {
-      0% { transform: translate3d(0,0,0) scale(1); opacity: 0.9; }
-      100% { transform: translate3d(0,-40px,0) scale(1.05); opacity: 0.75; }
-    }
-
-    .bg-grid {
-      position: fixed;
-      inset: -20%;
-      background:
-        repeating-linear-gradient(
-          rgba(255,255,255,0.03) 0px,
-          rgba(255,255,255,0.03) 1px,
-          transparent 1px,
-          transparent 46px
-        );
-      mix-blend-mode: soft-light;
-      opacity: 0.4;
-      transform: rotate(-10deg);
-      animation: gridFloat 30s linear infinite;
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    @keyframes gridFloat {
-      0% { transform: translateY(0) rotate(-10deg); }
-      100% { transform: translateY(-200px) rotate(-10deg); }
-    }
-
-    .orb {
-      position: fixed;
-      width: 260px;
-      height: 260px;
-      border-radius: 999px;
-      filter: blur(40px);
-      opacity: 0.4;
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .orb-1 {
-      top: 10%;
-      left: -6%;
-      background: radial-gradient(circle, rgba(198,166,100,0.8), transparent 60%);
-      animation: orbFloat1 22s ease-in-out infinite alternate;
-    }
-
-    .orb-2 {
-      bottom: -4%;
-      right: -6%;
-      background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%);
-      animation: orbFloat2 26s ease-in-out infinite alternate;
-    }
-
-    @keyframes orbFloat1 {
-      0% { transform: translate3d(0, 0, 0); opacity: 0.5; }
-      100% { transform: translate3d(40px, -20px, 0); opacity: 0.7; }
-    }
-
-    @keyframes orbFloat2 {
-      0% { transform: translate3d(0, 0, 0); opacity: 0.45; }
-      100% { transform: translate3d(-30px, -40px, 0); opacity: 0.7; }
-    }
-
-    /* ---------- LAYOUT ---------- */
-
-    .page {
-      max-width: 960px;
+    .container {
+      width: min(1080px, 100% - 32px);
       margin: 0 auto;
-      padding: 20px 20px 60px;
     }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 4px 18px;
+    .hero {
+      padding: 34px 0 24px;
     }
 
-    .brand-mark {
+    .badge {
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      letter-spacing: 0.17em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-    }
-
-    .brand-dot {
-      width: 9px;
-      height: 9px;
+      border: 1px solid rgba(78,164,255,.5);
+      color: #9fd1ff;
+      background: rgba(32, 95, 160, .2);
       border-radius: 999px;
-      background: var(--gold);
-      box-shadow: 0 0 14px rgba(198,166,100,0.9);
-    }
-
-    .tagline {
-      font-size: 11px;
-      color: var(--text-soft);
-      opacity: 0.8;
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 32px;
-      align-items: center;
-    }
-
-    @media (max-width: 780px) {
-      main {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-    }
-
-    /* ---------- HERO ---------- */
-
-    .hero-text {
-      padding: 12px 4px;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(198,166,100,0.55);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold);
+      padding: 6px 12px;
+      font-size: 12px;
       margin-bottom: 14px;
-      backdrop-filter: blur(10px);
-      background: rgba(0,0,0,0.55);
     }
 
-    .pill span {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--gold);
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.8vw, 3.2rem);
+      line-height: 1.08;
+      max-width: 900px;
     }
 
-    .hero-title {
-      font-size: clamp(2.1rem, 4vw, 2.8rem);
-      line-height: 1.1;
-      margin-bottom: 10px;
+    .hero-sub {
+      margin: 14px 0 22px;
+      color: var(--muted);
+      max-width: 760px;
+      font-size: clamp(1rem, 2vw, 1.14rem);
     }
 
-    .hero-title span {
-      color: var(--gold);
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 20px;
+      background: linear-gradient(180deg, rgba(13,34,63,.92), rgba(10,27,50,.92));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
     }
 
-    .hero-subtitle {
-      font-size: 14px;
-      color: var(--text-soft);
-      line-height: 1.7;
-      max-width: 480px;
-      margin-bottom: 18px;
+    @media (max-width: 900px) {
+      .hero-card { grid-template-columns: 1fr; }
     }
 
-    .hero-subtitle strong {
-      color: var(--text-main);
-      font-weight: 500;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-bottom: 18px;
-    }
-
-    .hero-meta span {
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(0,0,0,0.55);
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .btn-primary {
-      padding: 12px 20px;
-      border-radius: 999px;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      background: var(--gold);
-      color: #000;
-      font-weight: 600;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 10px 30px rgba(198,166,100,0.45);
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
-      text-decoration: none;
-    }
-
-    .btn-primary span.icon {
-      font-size: 18px;
-      line-height: 0;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 14px 36px rgba(198,166,100,0.7);
-    }
-
-    .micro {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    /* ---------- MOCKUP / CARD LADO DERECHO ---------- */
-
-    .hero-panel {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .phone-frame {
-      position: relative;
-      width: min(320px, 84vw);
-      border-radius: 32px;
-      padding: 12px;
-      background: radial-gradient(circle at top, #1e1e1e, #050505);
-      border: 1px solid rgba(255,255,255,0.12);
-      box-shadow:
-        0 18px 50px rgba(0,0,0,0.85),
-        0 0 0 1px rgba(255,255,255,0.04);
-      transform-origin: center;
-      transform: translateY(0px) rotate3d(1, -1, 0, 16deg);
-      transition: transform 0.3s ease;
-    }
-
-    .phone-inner {
-      border-radius: 24px;
-      padding: 18px 16px 16px;
-      background: radial-gradient(circle at top, rgba(198,166,100,0.25), #050505);
-      border: 1px solid rgba(255,255,255,0.08);
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.5;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .phone-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.6);
-      margin-bottom: 12px;
-      color: var(--accent);
-    }
-
-    .phone-badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--gold);
-    }
-
-    .phone-title {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text-main);
-    }
-
-    .phone-sub {
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    .phone-list {
+    .list {
+      margin: 0;
+      padding: 0;
       list-style: none;
-      margin-bottom: 10px;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
     }
 
-    .phone-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      font-size: 12px;
+    .list li {
+      background: rgba(7, 20, 37, .62);
+      border: 1px solid rgba(54,94,138,.7);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--bg-soft));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .flow {
+      padding: 18px 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .flow h2,
+    .cta-panel h2,
+    .cred h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+    }
+
+    .flow p,
+    .cta-panel p,
+    .cred p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .step {
+      border: 1px solid #244a77;
+      border-radius: var(--radius-sm);
+      background: #0a1a31;
+      padding: 12px;
+    }
+
+    .step strong {
+      display: block;
       margin-bottom: 6px;
+      color: #d5eaff;
+      font-size: .95rem;
     }
 
-    .phone-list li span {
-      font-size: 14px;
-      color: var(--gold);
-      line-height: 1.2;
+    @media (max-width: 840px) {
+      .steps { grid-template-columns: 1fr; }
     }
 
-    .phone-footer {
-      margin-top: 4px;
-      font-size: 11px;
-      color: var(--text-soft);
-      opacity: 0.9;
-    }
-
-    /* Pequeño brillo moving */
-    .phone-glow {
-      position: absolute;
-      width: 160%;
-      height: 80px;
-      top: -40px;
-      left: -30%;
-      background: linear-gradient(90deg,
-        transparent,
-        rgba(255,255,255,0.25),
-        transparent);
-      opacity: 0.33;
-      animation: phoneSweep 9s ease-in-out infinite;
-    }
-
-    @keyframes phoneSweep {
-      0% { transform: translateX(-40%); opacity: 0; }
-      25% { transform: translateX(10%); opacity: 0.5; }
-      50% { transform: translateX(40%); opacity: 0.2; }
-      100% { transform: translateX(80%); opacity: 0; }
-    }
-
-    @media (max-width: 780px) {
-      .phone-frame {
-        transform: translateY(0px) rotate3d(0,0,0,0deg);
-      }
-    }
-
-    /* ---------- SECCIÓN WAITLIST / FORM ---------- */
-
-    .section {
-      margin-top: 64px;
-    }
-
-    .section-title {
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-
-    .section-subtitle {
-      font-size: 13px;
-      color: var(--text-soft);
-      margin-bottom: 18px;
-      max-width: 520px;
-    }
-
-    .card-light {
-      background: rgba(10,10,10,0.94);
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 20px 18px 18px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.85);
-    }
-
-    form {
-      margin-top: 4px;
-      display: flex;
-      flex-direction: column;
+    .cred {
+      padding: 14px 0;
+      display: grid;
       gap: 12px;
     }
 
+    .cred-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .cred-grid { grid-template-columns: 1fr; }
+    }
+
+    .cred-item {
+      background: #09182b;
+      border: 1px solid #24486f;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+    }
+
+    .cred-item h3 {
+      margin: 0 0 6px;
+      font-size: .95rem;
+    }
+
+    .cred-item p {
+      margin: 0;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+
+    .cta-panel {
+      padding: 18px 0 36px;
+    }
+
+    .form-wrap {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+    }
+
     label {
-      font-size: 12px;
-      color: var(--text-soft);
+      font-size: .86rem;
+      color: var(--muted);
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    input[type="text"],
-    input[type="email"] {
+    input, select, button {
       width: 100%;
-      padding: 11px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(7,7,7,0.96);
-      color: var(--text-main);
-      font-size: 14px;
+      border-radius: 11px;
+      border: 1px solid #285182;
+      background: #08182d;
+      color: var(--text);
+      padding: 12px;
+      font: inherit;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    input:focus,
+    select:focus {
       outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(78,164,255,.2);
     }
 
-    input::placeholder {
-      color: #5d5d5d;
-    }
-
-    button[type="submit"] {
-      margin-top: 4px;
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 999px;
+    .cta-primary {
       border: none;
+      background: linear-gradient(160deg, var(--accent), var(--accent-strong));
+      color: #f7fbff;
+      font-weight: 700;
       cursor: pointer;
-      background: var(--gold);
-      color: #000;
-      font-weight: 600;
-      font-size: 14px;
-      transition: transform 0.16s ease, box-shadow 0.16s ease;
-      box-shadow: 0 8px 24px rgba(198,166,100,0.55);
+      box-shadow: 0 11px 28px rgba(44,123,211,.38);
     }
 
-    button[type="submit"]:hover {
-      transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 12px 32px rgba(198,166,100,0.8);
+    .cta-primary:hover { filter: brightness(1.05); }
+
+    .status {
+      margin: 4px 0 0;
+      font-size: .86rem;
+      color: var(--muted);
+      min-height: 1.2em;
     }
 
-    .footnote {
+    .status.ok { color: var(--ok); }
+    .status.warn { color: var(--warn); }
+
+    .result {
+      margin-top: 12px;
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      background: #071324;
+      line-height: 1.58;
+      white-space: pre-wrap;
+    }
+
+    details {
       margin-top: 8px;
-      font-size: 11px;
-      color: var(--text-soft);
+      border: 1px solid #25466f;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      background: #081729;
     }
 
-    /* ---------- BLOQUE POR QUÉ UNIRTE AHORA ---------- */
-
-    .why-box {
-      margin-top: 22px;
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(198,166,100,0.22);
-      background: radial-gradient(circle at top, rgba(198,166,100,0.12), rgba(0,0,0,0.6) 70%);
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.6;
+    details summary {
+      cursor: pointer;
+      color: #cfe5ff;
+      font-size: .9rem;
+      margin-bottom: 8px;
     }
 
-    .why-box strong {
-      color: var(--gold);
-      font-weight: 600;
+    .micro {
+      margin-top: 8px;
+      color: #97b2d1;
+      font-size: .79rem;
     }
 
-    .brand-footer {
-      margin-top: 24px;
-      font-size: 11px;
-      color: #888;
-      text-align: right;
-    }
-
-    .brand-footer span {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    /* ---------- ANIMACIONES SCROLL (FADE-IN) ---------- */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .footer {
+      padding: 8px 0 28px;
+      color: #93adcc;
+      font-size: .78rem;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs" type="module"></script>
 </head>
 <body>
+  <header class="hero">
+    <div class="container">
+      <div class="badge" id="badgeText">Análisis de libros para ejecución real</div>
+      <h1 id="heroTitle">Convierte cualquier libro en un plan claro de acción para los próximos 7 días.</h1>
+      <p class="hero-sub" id="heroSubtitle">Subes tu PDF y recibes un resumen práctico centrado en mentalidad, sistemas y dinero/impacto para decidir rápido qué aplicar primero y qué ignorar.</p>
 
-  <!-- Fondo animado -->
-  <div class="bg-gradient"></div>
-  <div class="bg-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+      <section class="hero-card" aria-label="beneficios principales">
+        <ul class="list">
+          <li><strong>Qué hace:</strong> Resume el libro y lo traduce en decisiones accionables.</li>
+          <li><strong>Qué problema te quita:</strong> Evita perder horas leyendo sin aterrizar acciones concretas.</li>
+          <li><strong>Qué resultado obtienes:</strong> Un mapa claro de prioridades para esta semana.</li>
+        </ul>
+        <div class="card" style="padding:14px;">
+          <p style="margin:0 0 8px;color:#dbecff;"><strong>Resultado esperado:</strong></p>
+          <p style="margin:0;color:var(--muted);">En pocos minutos tendrás: 1 idea principal, 3 acciones críticas y un plan simple de implementación.</p>
+        </div>
+      </section>
+    </div>
+  </header>
 
-  <div class="page">
-    <header>
-      <div class="brand-mark">
-        <div class="brand-dot"></div>
-        MASINNOVACIONES
+  <main class="container">
+    <section class="flow" aria-label="flujo lógico">
+      <div class="card">
+        <h2>Problema que resuelve</h2>
+        <p>La mayoría de resúmenes de libros son informativos, pero no te dicen qué hacer hoy. Esta herramienta reduce ruido y prioriza acciones.</p>
       </div>
-      <div class="tagline">Sistemas para mentes que no quieren repetir el mismo año.</div>
-    </header>
 
-    <main>
-      <!-- Lado izquierdo: texto hero -->
-      <section class="hero-text reveal">
-        <div class="pill">
-          <span></span> Lanzamiento · Lista prioritaria
-        </div>
-
-        <h1 class="hero-title">
-          El año que <span>no piensas repetir</span>.
-        </h1>
-
-        <p class="hero-subtitle">
-          Estamos preparando un sistema diseñado para que no entres al próximo año con la misma
-          identidad que te dejó corto en este. <strong>No es motivación. Es estructura.</strong>
-        </p>
-
-        <div class="hero-meta">
-          <span>Guía + sistema de preguntas</span>
-          <span>Identidad · Enfoque · Decisiones</span>
-          <span>Acceso limitado de lanzamiento</span>
-        </div>
-
-        <div class="hero-cta-row">
-          <a href="#waitlist" class="btn-primary">
-            Quiero estar en la lista
-            <span class="icon">↗</span>
-          </a>
-          <span class="micro">Serás de los primeros en recibir el aviso y el precio más bajo.</span>
-        </div>
-      </section>
-
-      <!-- Lado derecho: panel tipo “iPhone” -->
-      <section class="hero-panel reveal">
-        <div class="phone-frame" id="phone">
-          <div class="phone-glow"></div>
-          <div class="phone-inner">
-            <div class="phone-badge">
-              <span class="phone-badge-dot"></span>
-              Sistema · MASINNOVACIONES
-            </div>
-
-            <div class="phone-title">El Año Que No Piensas Repetir</div>
-            <div class="phone-sub">
-              Un recorrido guiado para revisar quién fuiste este año y decidir conscientemente
-              quién entra contigo al siguiente.
-            </div>
-
-            <ul class="phone-list">
-              <li>
-                <span>•</span>
-                <div>Identidad: qué versión de ti realmente dirigió tus decisiones.</div>
-              </li>
-              <li>
-                <span>•</span>
-                <div>Enfoque: en qué se consumieron tus días sin que lo notaras.</div>
-              </li>
-              <li>
-                <span>•</span>
-                <div>Decisiones: qué patrón estás repitiendo… y cómo romperlo.</div>
-              </li>
-            </ul>
-
-            <div class="phone-footer">
-              Lo que viene no es otro “propósito de año nuevo”.  
-              Es un corte de cuentas interno.
-            </div>
+      <div class="card">
+        <h2>Cómo funciona (simple)</h2>
+        <div class="steps">
+          <div class="step">
+            <strong>1) Sube tu PDF</strong>
+            El sistema extrae el contenido relevante.
           </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Sección de formulario / waitlist -->
-    <section id="waitlist" class="section reveal">
-      <h2 class="section-title">Únete a la lista prioritaria</h2>
-      <p class="section-subtitle">
-        Déjanos tu correo y serás de los primeros en recibir el acceso al sistema, junto con el
-        precio más bajo que tendrá. Sin listas eternas. Sin correos diarios. Solo lo necesario.
-      </p>
-
-      <div class="card-light">
-        <!-- FORMULARIO NETLIFY -->
-        <form name="lista-prioritaria-ano-no-repites"
-              method="POST"
-              action="/gracias.html"
-              data-netlify="true"
-              netlify-honeypot="bot-field">
-
-          <input type="hidden" name="form-name" value="lista-prioritaria-ano-no-repites" />
-
-          <div style="display:none;">
-            <label>No llenar<input name="bot-field" /></label>
+          <div class="step">
+            <strong>2) Procesa por enfoque</strong>
+            Organiza hallazgos en mentalidad, sistemas y dinero/impacto.
           </div>
-
-          <div>
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required />
+          <div class="step">
+            <strong>3) Recibe el plan</strong>
+            Obtienes acciones concretas y preguntas de ejecución.
           </div>
-
-          <div>
-            <label for="email">Correo electrónico</label>
-            <input id="email" name="email" type="email" placeholder="tucorreo@ejemplo.com" required />
-          </div>
-
-          <button type="submit">Quiero ser de los primeros</button>
-
-          <p class="footnote">
-            Nada de spam. Solo un aviso cuando el sistema esté listo y el acceso al precio de lanzamiento.
-          </p>
-        </form>
-
-        <div class="why-box">
-          <strong>Por qué unirte ahora:</strong><br><br>
-          Este sistema no es contenido motivacional. Es una herramienta de precisión diseñada para revisar
-          quién fuiste este año, soltar esa versión y preparar la identidad que sí pueda dirigir tus próximos
-          12 meses.<br><br>
-          Entrar a esta lista es asegurarte de dos cosas:<br>
-          – que no recibes el sistema tarde<br>
-          – y que lo recibes al precio más bajo que existirá<br><br>
-          Cuando abramos puertas, será simple: o avanzas con una estructura nueva, o repites el patrón de siempre.
-          Aquí eliges antes que el resto.
         </div>
       </div>
 
-      <div class="brand-footer">
-        Producido por <span>MASINNOVACIONES</span>
+      <div class="card">
+        <h2>Resultado esperado</h2>
+        <p>Terminas con claridad operativa: qué mantener, qué descartar y qué ejecutar esta misma semana.</p>
       </div>
     </section>
-  </div>
 
-  <!-- JS: animaciones de scroll / parallax ligero -->
-  <script>
-    // Fade-in en scroll
-    const reveals = document.querySelectorAll('.reveal');
+    <section class="cred" aria-label="credibilidad">
+      <h2>Ejemplos de uso y señales de confianza</h2>
+      <p>Referencias simuladas realistas para reducir incertidumbre mientras incorporas esta herramienta en tu flujo.</p>
+      <div class="cred-grid">
+        <article class="cred-item">
+          <h3>Caso: consultora independiente</h3>
+          <p>Usó un libro de productividad y transformó 14 notas sueltas en 3 rutinas medibles durante una semana.</p>
+        </article>
+        <article class="cred-item">
+          <h3>Caso: creador de contenido</h3>
+          <p>Pasó de “ideas generales” a una oferta clara en 48 horas con enfoque dinero/impacto.</p>
+        </article>
+        <article class="cred-item">
+          <h3>Señal operativa</h3>
+          <p>Objetivo típico tras usar la herramienta: reducir tiempo de síntesis de 2–3 horas a 15–20 minutos.</p>
+        </article>
+      </div>
+    </section>
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            // Una vez visible, deja de observar para no reanimar
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
+    <section class="cta-panel" aria-label="acción principal">
+      <div class="card">
+        <h2>Empieza ahora</h2>
+        <p>Sube el libro y recibe una guía accionable en minutos. Sin configuración técnica en el primer paso.</p>
 
-    reveals.forEach(el => observer.observe(el));
+        <div class="form-wrap">
+          <div>
+            <label for="pdfFile">Libro en PDF</label>
+            <input id="pdfFile" type="file" accept="application/pdf" />
+          </div>
 
-    // Parallax muy ligero en el "teléfono"
-    const phone = document.getElementById('phone');
-    if (phone) {
-      window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY || window.pageYOffset;
-        const offset = Math.min(scrolled * 0.04, 14);
-        phone.style.transform =
-          `translateY(${offset}px) rotate3d(1, -1, 0, 16deg)`;
-      });
+          <button id="analyzeBtn" class="cta-primary">Obtener mi plan de acción</button>
+          <p id="status" class="status">Esperando tu PDF...</p>
+
+          <details>
+            <summary>Opciones avanzadas (opcional)</summary>
+            <div>
+              <label for="goal">Prioridad de análisis</label>
+              <select id="goal">
+                <option value="equilibrado">Equilibrado</option>
+                <option value="mentalidad">Mentalidad</option>
+                <option value="sistemas">Sistemas</option>
+                <option value="dinero_impacto">Dinero / Impacto</option>
+              </select>
+            </div>
+            <div style="margin-top:8px;">
+              <label for="apiKey">API Key OpenAI (si quieres análisis más profundo)</label>
+              <input id="apiKey" type="password" placeholder="sk-..." />
+            </div>
+          </details>
+
+          <div id="result" class="result">Aquí verás tu resultado.</div>
+          <p class="micro">Primero pedimos solo lo esencial. Si luego quieres más personalización, puedes añadir opciones avanzadas.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Diseñado para decisiones claras: promesa → problema → método → resultado → acción.</div>
+  </main>
+
+  <script type="module">
+    const COPY = {
+      heroTitle: 'Convierte cualquier libro en un plan claro de acción para los próximos 7 días.',
+      heroSubtitle: 'Subes tu PDF y recibes un resumen práctico centrado en mentalidad, sistemas y dinero/impacto para decidir rápido qué aplicar primero y qué ignorar.',
+      cta: 'Obtener mi plan de acción'
+    };
+
+    document.getElementById('heroTitle').textContent = COPY.heroTitle;
+    document.getElementById('heroSubtitle').textContent = COPY.heroSubtitle;
+    document.getElementById('analyzeBtn').textContent = COPY.cta;
+
+    const { pdfjsLib } = globalThis;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.worker.min.mjs';
+
+    const elements = {
+      goal: document.getElementById('goal'),
+      pdfFile: document.getElementById('pdfFile'),
+      apiKey: document.getElementById('apiKey'),
+      analyzeBtn: document.getElementById('analyzeBtn'),
+      status: document.getElementById('status'),
+      result: document.getElementById('result')
+    };
+
+    function setStatus(message, type = '') {
+      elements.status.className = `status ${type}`.trim();
+      elements.status.textContent = message;
     }
+
+    function normalizeText(text) {
+      return text
+        .replace(/\s+/g, ' ')
+        .replace(/-\s+/g, '')
+        .replace(/[\u0000-\u001F]+/g, ' ')
+        .trim();
+    }
+
+    async function extractPdfText(file) {
+      const buffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: buffer });
+      const pdf = await loadingTask.promise;
+      const pageLimit = Math.min(pdf.numPages, 35);
+      const chunks = [];
+
+      for (let pageNumber = 1; pageNumber <= pageLimit; pageNumber += 1) {
+        setStatus(`Leyendo contenido (${pageNumber}/${pageLimit})...`);
+        const page = await pdf.getPage(pageNumber);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map((item) => item.str).join(' ');
+        if (pageText.trim()) chunks.push(pageText);
+      }
+
+      return normalizeText(chunks.join('\n'));
+    }
+
+    function topSentences(text, count = 8) {
+      const sentences = text.split(/(?<=[.!?])\s+/).filter((s) => s.length > 45);
+      return sentences.slice(0, count);
+    }
+
+    function localAnalysis(rawText, goal) {
+      const sample = rawText.slice(0, 18000);
+      const sentences = topSentences(sample, 9);
+      const goalMap = {
+        equilibrado: 'equilibrado entre mentalidad, sistemas y dinero/impacto',
+        mentalidad: 'con prioridad en mentalidad',
+        sistemas: 'con prioridad en sistemas',
+        dinero_impacto: 'con prioridad en dinero/impacto'
+      };
+
+      return `Resumen accionable\n\n` +
+        `Enfoque: ${goalMap[goal]}.\n\n` +
+        `1) Idea central\n${sentences[0] || 'No fue posible inferir una idea central clara.'}\n\n` +
+        `2) Mentalidad\n- Reencuadre clave: ${sentences[1] || 'Define una creencia útil basada en el texto.'}\n- Acción hoy: redacta una regla personal para tomar mejores decisiones.\n\n` +
+        `3) Sistemas\n- Principio operativo: ${sentences[2] || 'No se detectó con claridad en el fragmento.'}\n- Acción hoy: crea un bloque diario fijo de 20 minutos.\n\n` +
+        `4) Dinero / Impacto\n- Oportunidad: convertir aprendizaje en una oferta o proceso repetible.\n- Acción hoy: escribe una propuesta de valor en 3 líneas.\n\n` +
+        `5) Plan 7 días\nDía 1: extrae 5 ideas accionables.\nDía 2: prioriza 1 cambio de mentalidad.\nDía 3: diseña sistema semanal.\nDía 4: conecta sistema con resultado económico/impacto.\nDía 5: ejecuta versión mínima.\nDía 6: mide y ajusta.\nDía 7: documenta y escala.`;
+    }
+
+    async function aiAnalysis({ rawText, goal, apiKey }) {
+      const content = rawText.slice(0, 42000);
+      const focus = {
+        equilibrado: 'balanceado',
+        mentalidad: 'con prioridad en MENTALIDAD',
+        sistemas: 'con prioridad en SISTEMAS',
+        dinero_impacto: 'con prioridad en DINERO/IMPACTO'
+      }[goal];
+
+      const prompt = `Analiza este libro y responde en español, tono sobrio y ejecutivo, ${focus}.\n\n` +
+        `Devuelve estas secciones:\n` +
+        `1) Resumen ejecutivo (8-10 líneas).\n` +
+        `2) Mentalidad (creencias, sesgos, reencuadres).\n` +
+        `3) Sistemas (rutinas, indicadores, cadencias).\n` +
+        `4) Dinero/Impacto (monetización o amplificación real).\n` +
+        `5) Plan de implementación de 7 días.\n` +
+        `6) 10 preguntas de coaching accionables.\n\n` +
+        `Texto:\n${content}`;
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4.1-mini',
+          temperature: 0.35,
+          messages: [
+            { role: 'system', content: 'Eres un analista experto en libros y ejecución.' },
+            { role: 'user', content: prompt }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(`Error OpenAI (${response.status}): ${message.slice(0, 280)}`);
+      }
+
+      const data = await response.json();
+      return data.choices?.[0]?.message?.content || 'No se pudo generar respuesta.';
+    }
+
+    elements.analyzeBtn.addEventListener('click', async () => {
+      const file = elements.pdfFile.files?.[0];
+      if (!file) {
+        setStatus('Primero sube un PDF para continuar.', 'warn');
+        return;
+      }
+
+      const goal = elements.goal.value;
+      const apiKey = elements.apiKey.value.trim();
+
+      elements.analyzeBtn.disabled = true;
+      elements.result.textContent = 'Preparando tu análisis...';
+
+      try {
+        const rawText = await extractPdfText(file);
+
+        if (!rawText || rawText.length < 200) {
+          throw new Error('No se pudo extraer texto suficiente. Si el PDF es escaneado como imagen, usa una versión con texto seleccionable.');
+        }
+
+        if (apiKey) {
+          setStatus('Contenido leído. Generando análisis profundo...', 'ok');
+          elements.result.textContent = await aiAnalysis({ rawText, goal, apiKey });
+          setStatus('Listo: análisis completado.', 'ok');
+        } else {
+          setStatus('Contenido leído. Generando resumen accionable...', 'ok');
+          elements.result.textContent = localAnalysis(rawText, goal);
+          setStatus('Listo: resumen completado.', 'ok');
+        }
+      } catch (error) {
+        elements.result.textContent = `No se pudo completar el análisis.\n\nDetalle: ${error.message}`;
+        setStatus('Ocurrió un error durante el procesamiento.', 'warn');
+      } finally {
+        elements.analyzeBtn.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
